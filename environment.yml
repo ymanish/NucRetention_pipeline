@@ -1,0 +1,26 @@
+name: nuc-retention
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - fastqc
+  - trimmomatic
+  - bowtie2
+  - samtools
+  - macs2
+  - bedtools
+  - ucsc-liftover
+  - sra-tools
+  - biopython
+  - pandas
+  - matplotlib
+  - seaborn
+  - ucsc-bedgraphtobigwig
+  - scipy
+  - brokenaxes
+  - numba
+  - tqdm
+  - pip:
+      - pipdeptree
