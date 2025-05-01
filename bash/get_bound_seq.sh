@@ -2,8 +2,8 @@
 # Download the hg38 reference genome
 if [ ! -f ../data/raw/hg38.fa ]; then
     echo "hg38 reference genome not found. Downloading..."
-    wget http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz -P ../data/raw/
-    gunzip ../data/raw/hg38.fa.gz
+    wget http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz -P ../data/annotations/
+    gunzip ../data/annotations/hg38.fa.gz
 else
     echo "hg38 reference genome already exists. Skipping download."
 fi

@@ -18,3 +18,9 @@ qc_reports/
 /**/figs/
 /**/Fig/
 /**/fig/
+
+# Ignore Jupyter Notebook checkpoints
+**.ipynb_checkpoints
+/notebooks
+# Ignore Python virtual environments
+venv/

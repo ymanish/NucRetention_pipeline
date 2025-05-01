@@ -1,0 +1,5 @@
+##download_gse.sh 
+Downloads the raw reads from the GEO website provided by the authors
+
+##bed_to_bigwig.sh
+

@@ -1,3 +1,6 @@
+#/src/core/hypo_test.py
+# Created on 2025-04-06
+
 import numpy as np
 import pandas as pd
 from scipy.stats import mannwhitneyu, ks_2samp
@@ -6,22 +9,16 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from src.config import path
 
-# Function to load data clearly
 def load_energy_file(filepath):
-    """
-    Load energies from a tab-separated txt file with format:
-    ID<TAB>Energy
-    """
+
     data = pd.read_csv(filepath, sep='\t', header=None, names=['ID', 'Energy'])
-    print(data.shape)
+    print(f"Before filtering ... {data.shape}")
     # Remove rows with negative energy values
     data = data[data['Energy'] >= 0]
 
-
-    print(data.shape)
+    print(f"After filtering ... {data.shape}")
     return data
 
-# Calculate Z-scores clearly explained
 def calculate_z_scores(bound_df, unbound_df):
     # Concatenate both datasets to get combined mean and std
     combined_df = pd.concat([bound_df.assign(Type='Bound'), unbound_df.assign(Type='Unbound')])
@@ -140,14 +137,27 @@ def ks_test(group1, group2):
 
 
 if __name__ == '__main__':
-    # Replace 'bound.txt' and 'unbound.txt' with your file names
-    bound_file = path.RESULTS_DIR/ 'bound_free_energy_results.txt'
-    unbound_file =  path.RESULTS_DIR/ 'unbound_free_energy_results.txt'
 
-    # main(bound_file, unbound_file)
-    # Perform permutation test
+    # bound_file = path.RESULTS_DIR/ 'bound_free_energy_results_all_MD.txt'
+    # unbound_file =  path.RESULTS_DIR/ 'unbound_free_energy_results_all_MD.txt'    
+
+    # bound_file = path.RESULTS_DIR/ 'bound_free_energy_results_all_mixed.txt'
+    # unbound_file =  path.RESULTS_DIR/ 'unbound_free_energy_results_all_mixed.txt'
+
+    bound_file = path.RESULTS_DIR/ 'bound_free_energy_results_all_olson.txt'
+    unbound_file =  path.RESULTS_DIR/ 'unbound_free_energy_results_all_olson.txt'
+
+
+    main(bound_file, unbound_file)
+
+
+
+
+
     bound_df = load_energy_file(bound_file)
     unbound_df = load_energy_file(unbound_file)
+    print(bound_df.shape)
+    print(unbound_df.shape)
 
     # Find common IDs between the two dataframes
     common_indices = bound_df.index.intersection(unbound_df.index)
@@ -174,11 +184,12 @@ if __name__ == '__main__':
 
     # Plot the distributions of bound and unbound energies
     plt.figure(figsize=(8, 5))
-    sns.kdeplot(bound_df['Energy'], label='Bound', color='coral', fill=True, alpha=0.5)
-    sns.kdeplot(unbound_df['Energy'], label='Unbound', color='skyblue', fill=True, alpha=0.5)
-    plt.title('Energy Distributions (Bound vs Unbound)')
+    sns.kdeplot(bound_df['Energy'], label='Bound', color='coral', fill=True, alpha=0.7)
+    sns.kdeplot(unbound_df['Energy'], label='Unbound', color='skyblue', fill=True,alpha=0.7)
+    plt.title('Retained Nucleosomes vs Free DNA in Sperms - Energy Distribution (Olson)')
     plt.xlabel('Energy')
     plt.ylabel('Density')
     plt.legend()
     plt.tight_layout()
-    plt.show()
+    plt.savefig(path.RESULTS_DIR / 'figs/olson_param_energy_dist.pdf', dpi=300)
+    # plt.show()

@@ -3,8 +3,8 @@
 # Download and process hg38 genome assembly gap file (lists regions of the genome that are unassembled or unknown)
 if [ ! -f ../data/raw/gap.txt ]; then
     echo "Gap file not found. Downloading..."
-    wget http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/gap.txt.gz -P ../data/raw/
-    gunzip ../data/raw/gap.txt.gz
+    wget http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/gap.txt.gz -P ../data/annotations/
+    gunzip ../data/annotations/gap.txt.gz
 else
     echo "Gap file already exists. Skipping download."
 fi
@@ -16,7 +16,7 @@ fi
 
 
 # Extract the relevant columns (chromosome, start, end) and convert to BED format
-awk 'BEGIN {OFS="\t"} {print $2, $3, $4}' ../data/raw/gap.txt > ../data/processed/hg38_gaps.bed
+awk 'BEGIN {OFS="\t"} {print $2, $3, $4}' ../data/annotations/gap.txt > ../data/processed/hg38_gaps.bed
 bedtools sort -i ../data/processed/hg38_gaps.bed > ../data/processed/sorted_hg38_gaps.bed
 
 echo "Sorting and merging the gap regions..."
